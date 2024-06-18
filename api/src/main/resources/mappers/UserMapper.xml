@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.xiaoyu2017.api.mapper.UserMapper">
+    <insert id="insert">
+        insert into bbs.user (user_name, uid, password)
+        values (#{userName}, #{uid}, #{password});
+    </insert>
+    <delete id="deleteByUid">
+        delete
+        from bbs.user
+        where uid = #{uid};
+    </delete>
+    <select id="selectByUserNameAndPassword" resultType="user">
+        select *
+        from bbs.user
+        where user_name = #{userName}
+          and password = #{password}
+          and `delete` = 0
+          and `status` = 0;
+    </select>
+</mapper>
