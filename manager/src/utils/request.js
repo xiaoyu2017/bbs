@@ -5,7 +5,9 @@ import { getToken } from '@/utils/auth'
 
 // 创建axios
 const service = axios.create({
-  baseURL: 'http://localhost:12436',
+  // baseURL: 'http://localhost:12436',
+  baseURL: 'http://localhost:8080',
+  // baseURL: process.env.VUE_APP_BASE_API,
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })
