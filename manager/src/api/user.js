@@ -32,3 +32,10 @@ export function apiRoutes(data) {
         }
     })
 }
+
+export function getUsers() {
+    return request({
+        url: '/v1/api/user',
+        method: 'get'
+    })
+}
