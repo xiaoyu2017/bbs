@@ -1,5 +1,7 @@
 <script>
+import bus from '@/utils/EventBus'
 import {getUsers} from "@/api/user";
+import {MessageBox} from 'element-ui';
 
 export default {
   name: "index",
@@ -24,14 +26,19 @@ export default {
       console.log(`当前页: ${val}`);
     },
     addUser() {
-      console.log(store.getters.token)
+      bus.$emit('openCommonDialog', 'userAdd')
+    },
+    colInfo(row, type) {
+      console.log(JSON.stringify(row))
+      console.log(JSON.stringify(type))
     },
   },
   created() {
     getUsers().then(response => {
       this.tableData = response.data
-    });
-  }
+    })
+  },
+
 }
 </script>
 
@@ -40,6 +47,7 @@ export default {
     <el-col class="table-box">
       <el-table
           :data="tableData"
+          @expand-change="colInfo"
           border
           stripe
           height="100%"
@@ -66,14 +74,40 @@ export default {
             </el-row>
           </template>
 
-          <el-table-column prop="uid" label="UID" width="180"></el-table-column>
-          <el-table-column prop="userName" label="用户名" width="180"></el-table-column>
-          <el-table-column prop="nickName" label="名称" width="180"></el-table-column>
-          <el-table-column prop="email" label="邮箱" width="180"></el-table-column>
-          <el-table-column prop="phone" label="手机" width="180"></el-table-column>
-          <el-table-column prop="qq" label="QQ" width="180"></el-table-column>
+          <el-table-column type="expand" label="详情" width="50">
+            <template slot-scope="props">
+              <el-form label-position="left" inline class="demo-table-expand">
+                <el-form-item label="商品名称">
+                  <span>{{ props.row.name }}</span>
+                </el-form-item>
+                <el-form-item label="所属店铺">
+                  <span>{{ props.row.shop }}</span>
+                </el-form-item>
+                <el-form-item label="商品 ID">
+                  <span>{{ props.row.id }}</span>
+                </el-form-item>
+                <el-form-item label="店铺 ID">
+                  <span>{{ props.row.shopId }}</span>
+                </el-form-item>
+                <el-form-item label="商品分类">
+                  <span>{{ props.row.category }}</span>
+                </el-form-item>
+                <el-form-item label="店铺地址">
+                  <span>{{ props.row.address }}</span>
+                </el-form-item>
+                <el-form-item label="商品描述">
+                  <span>{{ props.row.desc }}</span>
+                </el-form-item>
+              </el-form>
+            </template>
+          </el-table-column>
 
-          <el-table-column label="操作">
+          <el-table-column prop="uid" label="UID" width="300"></el-table-column>
+          <el-table-column prop="userName" label="用户名" width="200"></el-table-column>
+          <el-table-column prop="nickName" label="名称" width="200"></el-table-column>
+          <el-table-column prop="email" label="邮箱"></el-table-column>
+
+          <el-table-column label="操作" width="120">
             <template slot-scope="scope">
               <el-button type="primary"
                          icon="el-icon-edit"
@@ -102,6 +136,7 @@ export default {
           :total="400">
       </el-pagination>
     </el-col>
+    <common-dialog/>
   </el-row>
 </template>
 
