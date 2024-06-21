@@ -1,3 +1,11 @@
+function guid() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        let r = Math.random() * 16 | 0,
+            v = c === 'x' ? r : (r & 0x3 | 0x8)
+        return v.toString(16)
+    })
+}
+
 const data = []
 
 function users() {
@@ -17,12 +25,13 @@ function users() {
 const mockData = {
     'GET /v1/api/user': users(),
     'POST /v1/api/user': (req, res) => {
-        const {uid, userName, nickName, email, phone, qq} = req.body;
+        const {userName, nickName, email, phone, qq} = req.body;
         data.push({
-            uid: uid, userName: userName, nickName: nickName, email: email, phone: phone, qq: qq
+            uid: guid(), userName: userName, nickName: nickName, email: email, phone: phone, qq: qq
         })
         return res.json({
-            status: 'ok'
+            error: 0,
+            message: 'add success!'
         });
     },
     'PUT /v1/api/user': (req, res) => {
@@ -33,7 +42,7 @@ const mockData = {
                 data[i] = getData
             }
         }
-        res.send({status: 'ok', message: 'update success！'});
+        res.send({error: 0, message: 'update success！'});
     },
     'DELETE /v1/api/user/:uid': (req, res) => {
         const uid = req.params.uid
