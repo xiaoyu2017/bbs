@@ -5,10 +5,13 @@ import store from './store'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
-import './RouterInterceptor'
 import '@/style/index.css'
 
+import './RouterInterceptor'
+import CommonDialog from "@/components/CommonDialog/index.vue";
+
 Vue.use(ElementUI)
+Vue.component('CommonDialog', CommonDialog)
 
 Vue.config.productionTip = false
 
