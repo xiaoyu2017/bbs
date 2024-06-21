@@ -7,87 +7,139 @@ export default {
     return {
       tableData: [
         {
+          id: 1,
           date: '2016-05-02',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
+          address: '上海市普陀区金沙江路 1518 弄',
+          hasChildren: true
         }, {
+          id: 2,
           date: '2016-05-04',
           name: '王小虎',
           address: '上海市普陀区金沙江路 1517 弄'
         }, {
+          id: 3,
           date: '2016-05-01',
           name: '王小虎',
           address: '上海市普陀区金沙江路 1519 弄'
         }, {
-          date: '2016-05-03',
+          id: 3,
+          date: '2016-05-01',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          address: '上海市普陀区金沙江路 1519 弄'
         }, {
-          date: '2016-05-03',
+          id: 3,
+          date: '2016-05-01',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          address: '上海市普陀区金沙江路 1519 弄'
         }, {
-          date: '2016-05-03',
+          id: 3,
+          date: '2016-05-01',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          address: '上海市普陀区金沙江路 1519 弄'
         }, {
-          date: '2016-05-03',
+          id: 3,
+          date: '2016-05-01',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          address: '上海市普陀区金沙江路 1519 弄'
         }, {
-          date: '2016-05-03',
+          id: 3,
+          date: '2016-05-01',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          address: '上海市普陀区金沙江路 1519 弄'
         }, {
-          date: '2016-05-03',
+          id: 3,
+          date: '2016-05-01',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          address: '上海市普陀区金沙江路 1519 弄'
         }, {
-          date: '2016-05-03',
+          id: 3,
+          date: '2016-05-01',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          address: '上海市普陀区金沙江路 1519 弄'
         }, {
-          date: '2016-05-03',
+          id: 3,
+          date: '2016-05-01',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          address: '上海市普陀区金沙江路 1519 弄'
         }, {
-          date: '2016-05-03',
+          id: 3,
+          date: '2016-05-01',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          address: '上海市普陀区金沙江路 1519 弄'
         }, {
-          date: '2016-05-03',
+          id: 3,
+          date: '2016-05-01',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          address: '上海市普陀区金沙江路 1519 弄'
         }, {
-          date: '2016-05-03',
+          id: 3,
+          date: '2016-05-01',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          address: '上海市普陀区金沙江路 1519 弄'
         }, {
-          date: '2016-05-03',
+          id: 3,
+          date: '2016-05-01',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          address: '上海市普陀区金沙江路 1519 弄'
         }, {
-          date: '2016-05-03',
+          id: 3,
+          date: '2016-05-01',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          address: '上海市普陀区金沙江路 1519 弄'
         }, {
-          date: '2016-05-03',
+          id: 3,
+          date: '2016-05-01',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          address: '上海市普陀区金沙江路 1519 弄'
         }, {
-          date: '2016-05-03',
+          id: 3,
+          date: '2016-05-01',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          address: '上海市普陀区金沙江路 1519 弄'
         }, {
-          date: '2016-05-03',
+          id: 3,
+          date: '2016-05-01',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          address: '上海市普陀区金沙江路 1519 弄'
+        }, {
+          id: 3,
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1519 弄'
+        }, {
+          id: 3,
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1519 弄'
+        }, {
+          id: 3,
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1519 弄'
         }],
       search: '',
       currentPage: 4
     }
   },
   methods: {
+    load(tree, treeNode, resolve) {
+      setTimeout(() => {
+        resolve([
+          {
+            id: 31,
+            date: '2016-05-01',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1519 弄'
+          }, {
+            id: 32,
+            date: '2016-05-01',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1519 弄'
+          }
+        ])
+      }, 1000)
+    },
     handleEdit(index, row) {
       console.log(index, row);
     },
@@ -103,7 +155,7 @@ export default {
     addUser() {
       console.log(store.getters.token)
     },
-  }
+  },
 }
 </script>
 
@@ -111,11 +163,15 @@ export default {
   <el-row class="box">
     <el-col class="table-box">
       <el-table
-          :data="tableData"
-          border
-          stripe
           height="100%"
-          max-height="100%">
+          max-height="100%"
+          :data="tableData"
+          row-key="id"
+          border
+          lazy
+          :load="load"
+          :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
+
         <el-table-column>
           <template slot="header" slot-scope="scope">
             <el-row>
@@ -169,17 +225,6 @@ export default {
           </el-table-column>
         </el-table-column>
       </el-table>
-    </el-col>
-    <el-col class="table-page-box">
-      <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="currentPage"
-          :page-sizes="[100, 200, 300, 400]"
-          :page-size="100"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="400">
-      </el-pagination>
     </el-col>
   </el-row>
 </template>
