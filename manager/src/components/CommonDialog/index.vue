@@ -28,7 +28,12 @@ export default {
       this.formMetaData = meta.formMetaData
       this.requestUrl = meta.requestUrl
       this.requestMethod = meta.requestMethod
-      this.oldData = oldData
+      if ('userEdit' === key) {
+        this.formData = oldData
+      } else {
+        this.formData = {}
+      }
+
     })
   },
   data() {
@@ -45,9 +50,6 @@ export default {
       requestUrl: '',
       // 请求Method
       requestMethod: '',
-
-      // 老数据
-      oldData: {}
     }
   },
   methods: {

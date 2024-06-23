@@ -19,7 +19,7 @@ module.exports = {
                 name: 'password',
                 label: '密码',
                 category: 'input',
-                type: 'password',
+                type: 'text',
                 placeholder: '用户密码',
             },
             {
@@ -59,7 +59,7 @@ module.exports = {
                 name: 'password',
                 label: '密码',
                 category: 'input',
-                type: 'password',
+                type: 'text',
                 placeholder: '用户密码',
             },
             {
