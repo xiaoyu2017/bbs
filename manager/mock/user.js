@@ -1,33 +1,17 @@
-function guid() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        let r = Math.random() * 16 | 0,
-            v = c === 'x' ? r : (r & 0x3 | 0x8)
-        return v.toString(16)
-    })
-}
-
-const data = []
-
-function users() {
-    for (let i = 0; i < 9; i++) {
-        data.push({
-            uid: 'user' + i,
-            userName: 'userName' + i,
-            nickName: 'nickName' + i,
-            email: 'email' + i + '@gmail.com',
-            phone: '1889999000' + i,
-            qq: '998877660' + i,
-        })
-    }
-    return data;
-}
+const baseData = require('./BaseData')
 
 const mockData = {
-    'GET /v1/api/user': users(),
+    'GET /v1/api/user': (req, res) => {
+        return res.json({
+            error: 0,
+            message: 'get user success!',
+            data: baseData.getUsersByPage(Number(req.query.page), Number(req.query.num))
+        })
+    },
     'POST /v1/api/user': (req, res) => {
         const {userName, nickName, email, phone, qq} = req.body;
-        data.push({
-            uid: guid(), userName: userName, nickName: nickName, email: email, phone: phone, qq: qq
+        baseData.addUser({
+            userName: userName, nickName: nickName, email: email, phone: phone, qq: qq
         })
         return res.json({
             error: 0,
@@ -36,12 +20,8 @@ const mockData = {
     },
     'PUT /v1/api/user': (req, res) => {
         const {uid, userName, nickName, email, phone, qq} = req.body;
-        const getData = {uid: uid, userName: userName, nickName: nickName, email: email, phone: phone, qq: qq}
-        for (let i = 0; i < data.length; i++) {
-            if (uid === data[i].uid) {
-                data[i] = getData
-            }
-        }
+        const updateData = {uid: uid, userName: userName, nickName: nickName, email: email, phone: phone, qq: qq}
+        baseData.updateUser(updateData)
         res.send({error: 0, message: 'update success！'});
     },
     'DELETE /v1/api/user/:uid': (req, res) => {
