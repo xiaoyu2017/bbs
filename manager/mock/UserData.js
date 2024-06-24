@@ -29,14 +29,14 @@ let ResponseEntity = {
     },
     deleteUser: function (uid) {
         for (let i = 0; i < this.data.length; i++) {
-            if (uid === this.data[i]) {
-                this.data.splice(i, i + 1)
+            if (uid === this.data[i].uid) {
+                this.data.splice(i, 1)
             }
         }
     },
     updateUser: function (user) {
         for (let i = 0; i < this.data.length; i++) {
-            if (user.uid === this.data[i]) {
+            if (user.uid === this.data[i].uid) {
                 this.data[i] = user
             }
         }
