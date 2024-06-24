@@ -1,7 +1,7 @@
 <script>
 import bus from '@/utils/EventBus'
-import {getUsers} from "@/api/user";
-import {MessageBox} from 'element-ui';
+import {Message, MessageBox} from "element-ui"
+import {deleteUsersByUid, getUsersByPage} from "@/api/user";
 
 export default {
   name: "index",
@@ -9,34 +9,66 @@ export default {
     return {
       tableData: [],
       search: '',
-      currentPage: 4
+      currentPage: 1,
+      pageSize: 10,
+      total: 0
     }
   },
   methods: {
     handleEdit(index, row) {
-      console.log(index, row);
+      bus.$emit('openCommonDialog', 'userEdit', row)
     },
     handleDelete(index, row) {
-      console.log(index, row);
+      MessageBox.confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteUsersByUid(row.uid).then(() => {
+          Message({
+            type: 'success',
+            message: '删除成功!'
+          });
+          this.updateTableData(this.currentPage, this.pageSize)
+        }).catch(() => {
+          Message({
+            type: 'error',
+            message: '删除失败!'
+          })
+        })
+      }).catch(() => {
+        Message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
     },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      this.pageSize = val
+      this.updateTableData(this.currentPage, this.pageSize)
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
-    },
-    addUser() {
-      bus.$emit('openCommonDialog', 'userAdd')
+      this.currentPage = val
+      this.updateTableData(this.currentPage, this.pageSize)
     },
     colInfo(row, type) {
       console.log(JSON.stringify(row))
       console.log(JSON.stringify(type))
     },
+    addUser() {
+      bus.$emit('openCommonDialog', 'userAdd')
+    },
+    updateTableData(page, num) {
+      // 获得用户信息
+      getUsersByPage(page, num).then(response => {
+        this.tableData = response.data.data
+        this.total = response.data.total
+        this.currentPage = page
+      })
+    },
   },
   created() {
-    getUsers().then(response => {
-      this.tableData = response.data
-    })
+    this.updateTableData(1, 10)
   },
 
 }
@@ -74,38 +106,12 @@ export default {
             </el-row>
           </template>
 
-          <el-table-column type="expand" label="详情" width="50">
-            <template slot-scope="props">
-              <el-form label-position="left" inline class="demo-table-expand">
-                <el-form-item label="商品名称">
-                  <span>{{ props.row.name }}</span>
-                </el-form-item>
-                <el-form-item label="所属店铺">
-                  <span>{{ props.row.shop }}</span>
-                </el-form-item>
-                <el-form-item label="商品 ID">
-                  <span>{{ props.row.id }}</span>
-                </el-form-item>
-                <el-form-item label="店铺 ID">
-                  <span>{{ props.row.shopId }}</span>
-                </el-form-item>
-                <el-form-item label="商品分类">
-                  <span>{{ props.row.category }}</span>
-                </el-form-item>
-                <el-form-item label="店铺地址">
-                  <span>{{ props.row.address }}</span>
-                </el-form-item>
-                <el-form-item label="商品描述">
-                  <span>{{ props.row.desc }}</span>
-                </el-form-item>
-              </el-form>
-            </template>
-          </el-table-column>
-
           <el-table-column prop="uid" label="UID" width="300"></el-table-column>
           <el-table-column prop="userName" label="用户名" width="200"></el-table-column>
           <el-table-column prop="nickName" label="名称" width="200"></el-table-column>
           <el-table-column prop="email" label="邮箱"></el-table-column>
+          <el-table-column prop="phone" label="手机号码"></el-table-column>
+          <el-table-column prop="qq" label="QQ"></el-table-column>
 
           <el-table-column label="操作" width="120">
             <template slot-scope="scope">
@@ -130,10 +136,10 @@ export default {
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currentPage"
-          :page-sizes="[100, 200, 300, 400]"
-          :page-size="100"
+          :page-sizes="[10, 15, 20, 30]"
+          :page-size="pageSize"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="400">
+          :total="total">
       </el-pagination>
     </el-col>
     <common-dialog/>
