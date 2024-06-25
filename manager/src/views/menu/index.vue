@@ -1,182 +1,77 @@
 <script>
-import store from "@/store";
+import bus from '@/utils/EventBus'
+import {Message, MessageBox} from 'element-ui'
+import {deleteMenuByUid, getMenu, getMenuChildren} from '@/api/menu'
 
 export default {
   name: "index",
   data() {
     return {
-      tableData: [
-        {
-          id: 1,
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          hasChildren: true
-        }, {
-          id: 2,
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        }, {
-          id: 3,
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          id: 3,
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          id: 3,
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          id: 3,
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          id: 3,
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          id: 3,
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          id: 3,
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          id: 3,
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          id: 3,
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          id: 3,
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          id: 3,
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          id: 3,
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          id: 3,
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          id: 3,
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          id: 3,
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          id: 3,
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          id: 3,
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          id: 3,
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          id: 3,
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          id: 3,
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }],
+      tableData: [],
       search: '',
-      currentPage: 4
     }
   },
   methods: {
     load(tree, treeNode, resolve) {
-      setTimeout(() => {
-        resolve([
-          {
-            id: 31,
-            date: '2016-05-01',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1519 弄'
-          }, {
-            id: 32,
-            date: '2016-05-01',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1519 弄'
-          }
-        ])
-      }, 1000)
+      getMenuChildren(tree.id).then(response => {
+        resolve(response.data.data)
+      })
     },
     handleEdit(index, row) {
-      console.log(index, row);
+      bus.$emit('openCommonDialog', 'menuEdit', row)
     },
     handleDelete(index, row) {
-      console.log(index, row);
+      MessageBox.confirm('此操作将永久删除该菜单, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteMenuByUid(row.id).then(() => {
+          Message({
+            type: 'success',
+            message: '删除成功!'
+          })
+          this.updateMenuTableData()
+        }).catch(() => {
+          Message({
+            type: 'error',
+            message: '删除失败!'
+          })
+        })
+      }).catch(() => {
+        Message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     },
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+    addMenu() {
+      bus.$emit('openCommonDialog', 'menuAdd')
     },
-    handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
-    },
-    addUser() {
-      console.log(store.getters.token)
-    },
+    updateMenuTableData() {
+      getMenu().then((response) => {
+        this.tableData = response.data.data
+      });
+    }
   },
+  created() {
+    this.updateMenuTableData()
+
+  }
 }
 </script>
 
 <template>
   <el-row class="box">
     <el-col class="table-box">
-      <el-table
-          height="100%"
-          max-height="100%"
-          :data="tableData"
-          row-key="id"
-          border
-          lazy
-          :load="load"
-          :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
-
+      <el-table height="100%" max-height="100%" border lazy
+                :data="tableData" row-key="id" :tree-props="{children: 'children', hasChildren: 'isTree'}"
+                :load="load">
         <el-table-column>
-          <template slot="header" slot-scope="scope">
+          <template slot="header">
             <el-row>
               <el-col :span="2">
-                <el-button style="float: left" type="primary" @click="addUser">新增用户</el-button>
+                <el-button style="float: left" type="primary" @click="addMenu">新增菜单</el-button>
               </el-col>
               <el-col :span="16" style="padding: 0 10px">
                 <el-alert
@@ -194,20 +89,31 @@ export default {
             </el-row>
           </template>
 
-          <el-table-column
-              prop="date"
-              label="日期"
-              width="180">
+          <el-table-column prop="id" label="ID" width="100"></el-table-column>
+          <el-table-column prop="path" label="路径" width="180"></el-table-column>
+          <el-table-column prop="name" label="名称" width="180"></el-table-column>
+          <el-table-column prop="componentPath" label="组件路径"></el-table-column>
+          <el-table-column prop="redirect" label="重定向" width="180"></el-table-column>
+          <el-table-column width="100" prop="isTree" label="树结构">
+            <template slot-scope="scope">
+              <i v-if="scope.row.isTree" class="el-icon-check"></i>
+              <i v-else class="el-icon-close"></i>
+            </template>
           </el-table-column>
-          <el-table-column
-              prop="name"
-              label="姓名"
-              width="180">
+          <el-table-column width="100" prop="hidden" label="隐藏">
+            <template slot-scope="scope">
+              <i v-if="scope.row.hidden" class="el-icon-check"></i>
+              <i v-else class="el-icon-close"></i>
+            </template>
           </el-table-column>
-          <el-table-column
-              prop="address"
-              label="地址">
+          <el-table-column width="100" prop="hasChildren" label="子菜单">
+            <template slot-scope="scope">
+              <i v-if="scope.row.hasChildren" class="el-icon-check"></i>
+              <i v-else class="el-icon-close"></i>
+            </template>
           </el-table-column>
+          <el-table-column prop="parentId" label="父菜单" width="80"></el-table-column>
+
           <el-table-column label="操作" width="120">
             <template slot-scope="scope">
               <el-button type="primary"
@@ -226,6 +132,8 @@ export default {
         </el-table-column>
       </el-table>
     </el-col>
+
+    <common-dialog/>
   </el-row>
 </template>
 
