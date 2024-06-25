@@ -28,12 +28,9 @@ export default {
       this.formMetaData = meta.formMetaData
       this.requestUrl = meta.requestUrl
       this.requestMethod = meta.requestMethod
-      if ('userEdit' === key) {
+      if (oldData !== null && oldData !== undefined) {
         this.formData = oldData
-      } else {
-        this.formData = {}
       }
-
     })
   },
   data() {

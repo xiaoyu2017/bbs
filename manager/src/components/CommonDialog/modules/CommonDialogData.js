@@ -1,7 +1,9 @@
 const user = require('./User')
+const menu = require('./Menu')
 
 const data = {
-    ...user
+    ...user,
+    ...menu
 }
 
 export function openDialog(key) {
