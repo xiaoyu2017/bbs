@@ -59,6 +59,7 @@ export default {
       bus.$emit('openCommonDialog', 'userAdd')
     },
     updateTableData(page, num) {
+      console.log('updateTableData')
       // 获得用户信息
       getUsersByPage(page, num).then(response => {
         this.tableData = response.data.data
