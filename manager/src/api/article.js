@@ -12,7 +12,7 @@ export function getArticlesByPage(page, num) {
     return request(config)
 }
 
-export function deleteArticleByUid(id) {
+export function deleteArticleByid(id) {
     let config = {
         url: '/v1/api/article/' + id,
         method: 'delete',

@@ -1,4 +1,5 @@
 export default {
+    height: '100%',
     minHeight: '300px',
     previewStyle: 'vertical',  // Markdown Editor的预览样式（标签，垂直）
     useCommandShortcut: true,  // 是否使用键盘快捷键执行命令

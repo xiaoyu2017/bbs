@@ -20,11 +20,24 @@ export default {
   components: {markdownEditor},
   data() {
     return {
-      title: ''
+      title: '',
+      id: ''
     }
   },
   mounted() {
-    console.log(JSON.stringify(this.$route.params.article))
+    const article = this.$route.params.article
+    if (article.id) {
+      this.id = article.id
+    }
+    if (article.title) {
+      this.title = article.title
+    }
+    if (article.html) {
+      this.$refs.editor.setHtmlData(article.html)
+    }
+    if (article.value) {
+      this.$refs.editor.setValue(article.value)
+    }
   },
   methods: {
     submitArticle() {

@@ -5,9 +5,7 @@
 <script>
 import '@toast-ui/editor/dist/toastui-editor.css';
 // 工具栏显示中文
-// import '@toast-ui/editor/dist/i18n/zh-cn.js';
 import '@toast-ui/editor/dist/i18n/zh-cn';
-
 import Editor from '@toast-ui/editor';
 // Toast UI Editor 配置文件
 import defaultOptions from './defaultOptions.js';
@@ -38,11 +36,6 @@ export default {
       type: String,
       default: 'markdown',
     },
-    height: {
-      type: String,
-      required: false,
-      default: '300px',
-    },
     language: {
       type: String,
       required: false,
@@ -58,7 +51,6 @@ export default {
     editorOptions() {
       const _options = Object.assign({}, defaultOptions, this.options);
       _options.initialEditType = this.mode;
-      _options.height = this.height;
       _options.language = this.language;
       return _options;
     }
@@ -86,15 +78,23 @@ export default {
     getHtml() {
       return this.editor.getHTML();
     },
+    // 获取编辑器 html
+    setHtmlData(html) {
+      this.editor.setHTML(html)
+    },
     // 获取编辑器 Markdown
     getValue() {
       return this.editor.getMarkdown();
+    },
+    // 获取编辑器 Markdown
+    setValue(value) {
+      this.editor.setMarkdown(value);
     },
     // 上传图片方法
     uploadImg() {
       this.editor.removeHook('addImageBlobHook');
       this.editor.on('addImageBlobHook', (_file, cb) => {
-        console.log('file'+_file)
+        console.log('file' + _file)
         // const file = new FormData();
         // file.append('file', _file);
         // const result = upload.uploadImg(file);

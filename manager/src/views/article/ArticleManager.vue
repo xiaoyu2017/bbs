@@ -1,6 +1,6 @@
 <script>
 import {Message, MessageBox} from "element-ui"
-import {deleteArticleByUid, getArticlesByPage} from "@/api/article";
+import {deleteArticleByid, getArticlesByPage} from "@/api/article";
 
 export default {
   name: "ArticleManager",
@@ -23,7 +23,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        deleteArticleByUid(row.id).then(() => {
+        deleteArticleByid(row.id).then(() => {
           Message({
             type: 'success',
             message: '删除成功!'

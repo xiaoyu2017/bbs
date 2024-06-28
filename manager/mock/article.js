@@ -26,6 +26,15 @@ const mockData = {
             total: articleData.length
         });
     },
+    'DELETE /v1/api/article/:id': (req, res) => {
+        let id = Number(req.params.id)
+        for (let i = 0; i < articleData.length; i++) {
+            if (id === articleData[i].id) {
+                articleData.splice(i, 1)
+            }
+        }
+        res.send({status: 'ok', message: 'delete success!'})
+    },
 }
 
 module.exports = mockData

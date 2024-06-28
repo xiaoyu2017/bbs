@@ -133,6 +133,30 @@ export const routes = [
         ]
     },
     {
+        path: '/article',
+        name: 'Article',
+        component: Layout,
+        hasChildren: true,
+        meta: {
+            title: 'Article',
+            icon: 'el-icon-notebook-2'
+        },
+        children: [
+            {
+                path: 'ArticleManager',
+                component: () => import('@/views/article/ArticleManager'),
+                name: 'ArticleManager',
+                meta: {title: 'ArticleManager', icon: 'el-icon-minus'}
+            },
+            {
+                path: 'ArticleEditor',
+                component: () => import('@/views/article/ArticleEditor'),
+                name: 'ArticleEditor',
+                meta: {title: 'ArticleEditor', icon: 'el-icon-minus'}
+            },
+        ]
+    },
+    {
         path: '/login',
         component: () => import('@/views/login/index'),
         hidden: true
