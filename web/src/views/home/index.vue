@@ -1,68 +1,89 @@
 <template>
-  <div class="text-center">
-    <v-btn
-        v-if="!chip1 && !chip2 && !chip3 && !chip4"
-        close
-        color="primary"
-        dark
-        @click="chip1 = true, chip2 = true, chip3 = true, chip4= true"
-    >
-      Reset Chips
-    </v-btn>
+  <v-row>
+    <v-col>
+      <v-row>
+        <v-col
+            v-for="card in cards"
+            :key="card"
+            cols="12"
+        >
+          <v-card>
+            <v-subheader>{{ card }}</v-subheader>
 
-    <v-chip
-        v-if="chip1"
-        class="ma-2"
-        close
-        @click:close="chip1 = false"
-    >
-      Closable
-    </v-chip>
+            <v-list two-line>
+              <template v-for="n in 10">
+                  <v-list-item :key="n" style="border-bottom:solid 1px rgba(0,0,0,.12); " @click="toArticle">
+                    <v-list-item-avatar color="grey darken-1"></v-list-item-avatar>
 
-    <v-chip
-        v-if="chip2"
-        class="ma-2"
-        close
-        color="red"
-        text-color="white"
-        @click:close="chip2 = false"
-    >
-      Remove
-    </v-chip>
+                    <v-list-item-content>
+                      <v-list-item-title>Message {{ n }}</v-list-item-title>
+                      <v-list-item-subtitle>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil repellendus distinctio
+                        similique
+                      </v-list-item-subtitle>
+                    </v-list-item-content>
+                  </v-list-item>
+<!--                  <v-divider v-if="n !== 6" :key="`divider-${n}`" inset></v-divider>-->
+              </template>
+            </v-list>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-col>
 
-    <v-chip
-        v-if="chip3"
-        class="ma-2"
-        close
-        color="green"
-        outlined
-        @click:close="chip3 = false"
-    >
-      Success
-    </v-chip>
+    <v-col cols="3">
+      <v-sheet rounded="lg">
+        <v-list color="transparent">
+          <v-list-item
+              v-for="n in 5"
+              :key="n"
+              link
+          >
+            <v-list-item-content>
+              <v-list-item-title>
+                List Item {{ n }}
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
 
-    <v-chip
-        v-if="chip4"
-        class="ma-2"
-        close
-        color="orange"
-        label
-        outlined
-        @click:close="chip4 = false"
-    >
-      Complete
-    </v-chip>
-  </div>
+          <v-divider class="my-2"></v-divider>
+
+          <v-list-item
+              link
+              color="grey lighten-4"
+          >
+            <v-list-item-content>
+              <v-list-item-title>
+                Refresh
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-sheet>
+    </v-col>
+  </v-row>
 </template>
 <script>
 export default {
-  data () {
+  data() {
     return {
-      chip1: true,
-      chip2: true,
-      chip3: true,
-      chip4: true,
+      cards: ['今日热门', '新发文章', '最新回复', '评论最多'],
     }
   },
+  methods:{
+    toArticle() {
+
+    },
+  }
 }
 </script>
+<style>
+.v-card.on-hover.theme--dark {
+background-color: rgba(#FFF, 0.8)
+}
+
+>.v-card__text {
+color: #000
+}
+
+</style>
