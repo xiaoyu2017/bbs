@@ -1,5 +1,6 @@
 package com.github.xiaoyu2017.api.util;
 
+import com.github.xiaoyu2017.api.domain.pojo.User;
 import com.github.xiaoyu2017.api.domain.vo.Payload;
 import io.jsonwebtoken.*;
 
@@ -110,9 +111,11 @@ public class JwtUtil {
     public static void main(String[] args) throws Exception {
         String privateKey = "/Users/yujiangzhong/IdeaProjects/Java/id_rsa";
         String publicKey = "/Users/yujiangzhong/IdeaProjects/Java/id_rsa.pub";
-        String token = "    eyJhbGciOiJSUzI1NiJ9.eyJVU0VSX0lORk8iOiJ7XCJpZFwiOm51bGwsXCJjcmVhdGVUaW1lXCI6bnVsbCxcInVwZGF0ZVRpbWVcIjpudWxsLFwic3RhdHVzXCI6bnVsbCxcIm5pY2tOYW1lXCI6XCJmaXNoXCIsXCJlbWFpbFwiOlwiMTg4OTUzMTEzMDlAZ21haWwuY29tXCIsXCJwaG9uZVwiOlwiMDU2NDY3NjM0NzlcIixcImJpcnRoZGF5XCI6MTcxNjMwNTUyNzkyOH0iLCJqdGkiOiJPV1prTWpNMU1EQXROMlpoTkMwME9UZzVMV0V6TURFdFlqbGtabUZtT0dKaU9XUmsiLCJleHAiOjE3MTYzMDczMjh9.JtAdN97RP0ZQYteopo-JMGOpxGAr-YKcv9S0pig0C-rdnhS7ytKdaMhBzMUW3DrQ5JdmJQmrETfTlnb1UQUDF441SFqJ32GMLmUD8NBCklTlwmf7LHHqSorfzUdtnz3SXiZko7IIFdJTeevvRRZveon876oQGVKZKBXTUm3LGCiAvd_TzXn7WdpKS3NVTLDmzfy8-1IDGsrueVsH3KQTlHxIrFzgpI4lynIeEtrk7FHM0DXLNYxMwf_KYJ1shn-afNZjbdL1zKlISc1fnViR3TexBrgu7JpkGrcfTccJEvSy1SIY1QEPeffP6LjH0_X2PRbX1t0nx4mLMMuG2w9MJA";
+        String token = "eyJhbGciOiJSUzI1NiJ9.eyJVU0VSX0lORk8iOiJ7XCJpZFwiOjIsXCJjcmVhdGVUaW1lXCI6MTcxODY2MjAwMjAwMCxcInVwZGF0ZVRpbWVcIjoxNzE4NjYyMDAyMDAwLFwic3RhdHVzXCI6MCxcIm9yZGVyXCI6MCxcInZlcnNpb25cIjowLFwiZGVsZXRlXCI6ZmFsc2UsXCJ1c2VyTmFtZVwiOlwiYWRtaW5cIixcInBhc3N3b3JkXCI6XCJhZG1pblwiLFwidWlkXCI6XCIyODQ1NTUxNjM2MDYzMjMyMDBcIn0iLCJqdGkiOiJZekE0WmpneU1ETXROMk14WmkwME5XUTBMVGd4TnpjdE5HWTNZakUxTlRVNVpEazEiLCJleHAiOjE3MTk4NTEwNjh9.V6UqBqUpEPbq2mff0eO46btDdYgkCbJ2psgw4iEfjn-vDDWGHN_AA1NkRnCKWX3kSfuR44B_hWDSpvu4r1dpIgxry-72WUqfyNKwATdSapLHhkJ89_0dh4KjE7CR-k6kk-qGDfc0zg8FDlGyem0QODC-0eVwV48CPamOwrAoFDBOz5C2-mChIzVdspXlFtEbX4Zs7U88Wvw7UEmHMcCpEMrm3o3FacPzmIISrw0GtO71LYkFI3FJS2amn3HsxJd35qGZeULbz6Kwti7OpjL3Y1NtdX0KZw_8nVGxcaDcYF381lyCTulQNmC7YTMFFJdkS1_NfpXwrJPlUhMfGdpreA";
 //
-//        Payload<UserInfo> payload = getInfoFromToken(token, RsaUtil.getPublicKey(publicKey), UserInfo.class);
-//        System.out.println(payload);
+        Payload<User> payload = getInfoFromToken(token, RsaUtil.getPublicKey(publicKey), User.class);
+        System.out.println(payload.getExpiration().getTime());
+        System.out.println(System.currentTimeMillis());
+        System.out.println(payload.getExpiration().getTime()>System.currentTimeMillis());
     }
 }

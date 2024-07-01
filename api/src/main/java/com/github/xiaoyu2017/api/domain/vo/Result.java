@@ -19,16 +19,26 @@ public class Result<T> {
     private T data;
     private Date time = new Date();
 
+    public Result() {
+    }
+
+    public Result(String message, String code, Integer error, T data) {
+        this.message = message;
+        this.code = code;
+        this.error = error;
+        this.data = data;
+    }
+
     public static Result<String> success(ResultCode resultCode) {
         Result<String> result = new Result<>();
-        result.setMessage(resultCode.getValue());
+        result.setMessage(resultCode.getMessage());
         result.setCode(resultCode.getCode());
         return result;
     }
 
     public static Result<String> error(ResultCode resultCode) {
         Result<String> result = new Result<>();
-        result.setMessage(resultCode.getValue());
+        result.setMessage(resultCode.getMessage());
         result.setCode(resultCode.getCode());
         result.setError(1);
         return result;
@@ -36,7 +46,7 @@ public class Result<T> {
 
     public static <T> Result<T> success(ResultCode resultCode, T t) {
         Result<T> result = new Result<>();
-        result.setMessage(resultCode.getValue());
+        result.setMessage(resultCode.getMessage());
         result.setCode(resultCode.getCode());
         result.setError(1);
         result.setData(t);

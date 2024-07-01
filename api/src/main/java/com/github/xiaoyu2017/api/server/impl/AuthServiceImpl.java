@@ -7,7 +7,6 @@ import com.github.xiaoyu2017.api.mapper.UserMapper;
 import com.github.xiaoyu2017.api.server.AuthService;
 import com.github.xiaoyu2017.api.util.JwtUtil;
 import com.github.xiaoyu2017.api.util.StrUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +38,17 @@ public class AuthServiceImpl implements AuthService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public boolean verifyToken(String token) {
+        Payload<User> infoFromToken = null;
+        try {
+            infoFromToken = JwtUtil.getInfoFromToken(token, jwtConfig.getPublicKey(), User.class);
+        } catch (Exception e) {
+            return false;
+        }
+        return infoFromToken.getExpiration().getTime() > System.currentTimeMillis();
     }
 
     @Override

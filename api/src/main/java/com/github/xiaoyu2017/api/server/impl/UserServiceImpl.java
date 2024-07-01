@@ -35,11 +35,11 @@ public class UserServiceImpl implements UserService {
             String token = JwtUtil.generateTokenExpireInMinutes(resultUser, jwtConfig.getPrivateKey(), jwtConfig.getUser().getExpire());
             result.setData(token);
             result.setCode(ResultCode.LOGIN_SUCCESS_200.getCode());
-            result.setMessage(ResultCode.LOGIN_SUCCESS_200.getValue());
+            result.setMessage(ResultCode.LOGIN_SUCCESS_200.getMessage());
             result.setError(0);
         } else {
             result.setCode(ResultCode.LOGIN_ERROR_400.getCode());
-            result.setMessage(ResultCode.LOGIN_ERROR_400.getValue());
+            result.setMessage(ResultCode.LOGIN_ERROR_400.getMessage());
             result.setError(1);
         }
         return result;

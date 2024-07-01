@@ -1,11 +1,14 @@
 package com.github.xiaoyu2017.api.interceptor;
 
+import com.github.xiaoyu2017.api.domain.bean.BbsContext;
 import com.github.xiaoyu2017.api.server.AuthService;
+import com.github.xiaoyu2017.api.util.JsonUtils;
 import com.github.xiaoyu2017.api.util.StrUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +43,11 @@ public class AuthHandlerInterceptor implements HandlerInterceptor {
             response.sendRedirect("/login");
             return false;
         }
+        // 校验token
+        if (!authService.verifyToken(token)) {
+            response.sendRedirect("/login");
+            return false;
+        }
         // token是否过期
         if (authService.isLapse(token)) {
             response.sendRedirect("/login");
@@ -51,6 +59,19 @@ public class AuthHandlerInterceptor implements HandlerInterceptor {
             Cookie cookie = new Cookie(StrUtil.USER_TOKEN, token);
             response.addCookie(cookie);
         }
+        BbsContext.set(new BbsContext(token));
         return true;
+    }
+
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        System.out.println(JsonUtils.toString(modelAndView));
+        HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        System.out.println(JsonUtils.toString(handler));
+        HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
     }
 }

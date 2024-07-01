@@ -19,6 +19,14 @@ public interface AuthService {
     String verify(String userName, String password);
 
     /**
+     * 验证token正确性
+     *
+     * @param token 用户登录token
+     * @return 是否正确头可能
+     */
+    boolean verifyToken(String token);
+
+    /**
      * 刷新token过期时间
      *
      * @param token 用户token
