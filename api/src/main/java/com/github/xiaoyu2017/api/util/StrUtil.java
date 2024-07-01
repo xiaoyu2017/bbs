@@ -1,7 +1,4 @@
-package com.github.xiaoyu2017.api.common;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+package com.github.xiaoyu2017.api.util;
 
 /**
  * 字符串相关处理工具类
@@ -17,8 +14,10 @@ public class StrUtil {
         return split[0].substring(i);
     }
 
-    public static void main(String[] args) {
-        String str = "/user/login/lslslsl?api=sasas";
-        System.out.println(StrUtil.uriRemoveParam(str));
-    }
+    // Redis
+    public static final String AUTH_BLACK_LIST_KEY = "auth:black_list";
+
+
+    // Web
+    public static final String USER_TOKEN = "USER_TOKEN";
 }

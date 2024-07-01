@@ -1,10 +1,12 @@
 package com.github.xiaoyu2017.api.server.impl;
 
+import com.github.xiaoyu2017.api.config.JwtConfig;
 import com.github.xiaoyu2017.api.domain.bean.ResultCode;
 import com.github.xiaoyu2017.api.domain.pojo.User;
 import com.github.xiaoyu2017.api.domain.vo.Result;
 import com.github.xiaoyu2017.api.mapper.UserMapper;
 import com.github.xiaoyu2017.api.server.UserService;
+import com.github.xiaoyu2017.api.util.JwtUtil;
 import com.github.xiaoyu2017.api.util.SnowFlakeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,15 +22,27 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    JwtConfig jwtConfig;
 
     @Override
-    public boolean verify(User user) {
+    public Result<String> verify(User user) {
         User resultUser = userMapper.selectByUserNameAndPassword(user);
+        Result<String> result = new Result<>();
         if (resultUser != null) {
-            return true;
+            user.setPassword("");
+            // 返回JWT
+            String token = JwtUtil.generateTokenExpireInMinutes(resultUser, jwtConfig.getPrivateKey(), jwtConfig.getUser().getExpire());
+            result.setData(token);
+            result.setCode(ResultCode.LOGIN_SUCCESS_200.getCode());
+            result.setMessage(ResultCode.LOGIN_SUCCESS_200.getValue());
+            result.setError(0);
         } else {
-            return false;
+            result.setCode(ResultCode.LOGIN_ERROR_400.getCode());
+            result.setMessage(ResultCode.LOGIN_ERROR_400.getValue());
+            result.setError(1);
         }
+        return result;
     }
 
     @Override

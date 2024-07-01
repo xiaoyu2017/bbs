@@ -1,4 +1,4 @@
-package com.github.xiaoyu2017.api.common;
+package com.github.xiaoyu2017.api.util;
 
 import java.io.File;
 import java.io.IOException;

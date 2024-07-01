@@ -11,7 +11,7 @@ import com.github.xiaoyu2017.api.domain.vo.Result;
  */
 public interface UserService {
 
-    boolean verify(User user);
+    Result<String> verify(User user);
 
     Result<String> add(User user);
 

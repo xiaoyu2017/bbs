@@ -1,4 +1,4 @@
-package com.github.xiaoyu2017.api.common;
+package com.github.xiaoyu2017.api.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;

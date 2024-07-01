@@ -1,4 +1,4 @@
-package com.github.xiaoyu2017.api.common;
+package com.github.xiaoyu2017.api.util;
 
 import com.github.xiaoyu2017.api.domain.vo.Payload;
 import io.jsonwebtoken.*;
@@ -8,7 +8,6 @@ import java.security.PublicKey;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Base64;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
